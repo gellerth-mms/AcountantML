@@ -1,0 +1,51 @@
+project.ext {
+    serviceName = rootProject.name
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+version '0.1-SNAPSHOT'
+
+bootJar {
+    archiveName "${project.serviceName}.jar"
+}
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE"
+    }
+}
+
+dependencies {
+    // misc
+    compile('io.vavr:vavr:0.9.0')
+    compile 'com.google.cloud:google-cloud-vision:1.48.0'
+
+
+
+    compile 'com.google.apis:google-api-services-drive:v3-rev135-1.25.0'
+
+    // http
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    compile('com.fasterxml.jackson.module:jackson-module-paranamer:2.8.7')
+
+    //swagger
+    compile('io.springfox:springfox-swagger2:2.8.0')
+    compile('io.springfox:springfox-swagger-ui:2.8.0')
+
+    // monitoring
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+
+    // test
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
