@@ -48,4 +48,6 @@ dependencies {
 
     // test
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'net.rationalminds', name: 'DateParser', version: '1.4'
+
 }

@@ -1,16 +1,14 @@
 package com.mediasaturn.fom.application.http;
 
 import com.google.cloud.vision.v1.*;
+import net.rationalminds.LocalDateModel;
+import net.rationalminds.Parser;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/test")
@@ -71,6 +69,8 @@ public final class ReservationController {
                                 }
                              //   out.format("Word text: %s \n", wordText);
                                 paraText = String.format("%s %s", paraText, wordText);
+                                if(extractDate(paraText)!=null){
+                                    LocalDateModel date =extractDate(paraText);                                };
                             }
                             // Output Example using Paragraph:
                             out.println("\nParagraph Text :   " + paraText);
@@ -84,5 +84,17 @@ public final class ReservationController {
                 out.println("\n------------------------------------------------------------------------");
             }
         }
+    }
+
+    private static LocalDateModel extractDate(String paraText) {
+        String st = paraText;
+        String stt = st.replaceAll("\\s+","");
+        Parser parser=new Parser();
+        List<LocalDateModel> dates=parser.parse(stt);
+
+        if(dates.size()>0){String date = dates.get(0).getOriginalText();
+            return dates.get(0);
+        }
+        else return null;
     }
 }
